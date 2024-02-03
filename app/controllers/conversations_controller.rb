@@ -65,6 +65,13 @@ class ConversationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def conversation_params
-      params.fetch(:conversation, {})
+      params.fetch(:conversation, {
+        location_params: [
+          :latitude,
+          :longitude,
+          :altitude,
+          :heading
+        ]
+      })
     end
 end
