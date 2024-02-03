@@ -1,10 +1,18 @@
 <div id="<%= dom_id conversation %>">
 
-  <h6>This is a conversation.</h6>
+  <div data-controller="conversation">
+    <button data-action="click->conversation#poll" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Poll Location</button>
+    <button data-action="click->conversation#send" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send Location</button>
+  </div>
 
+  <div id="location_poll_form">
+    <%= render partial: 'locations/form', locals: { location: conversation.locations.new } %>
+  </div>
+  
   <% if action_name != "show" %>
     <%= link_to "Show this conversation", conversation, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <%= link_to "Edit this conversation", edit_conversation_path(conversation), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <hr class="mt-6">
   <% end %>
+
 </div>
