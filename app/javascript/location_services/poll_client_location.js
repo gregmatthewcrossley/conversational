@@ -4,19 +4,36 @@ export function poll_location() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log("Got location:", position);
-        updateFormWithLocation(position);
+        postLocationAsJson(position);
       },
       (err) => {
         console.error("Error obtaining location:", err);
-        // Handle the error appropriately in your application context
-        // For example, show a message to the user or log the error
       }
     );
   } else {
     console.error("Geolocation is not supported by this browser.");
-    // Inform the user that geolocation is not available
-    // This could be a UI update or a fallback mechanism
   }
+}
+
+function postLocationAsJson(position) {
+  const url = "/locations";
+  const conversationId = document.querySelector("meta[name='conversation-id']").content;
+  const data = {
+    location: {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      conversation_id: conversationId
+    },
+  };
+  const csrfToken = document.querySelector("meta[name='csrf-token']").content;
+  fetch (url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": csrfToken
+    },
+    body: JSON.stringify(data)
+  })
 }
 
 // Extracted method to update the form, reducing repetition and improving readability
