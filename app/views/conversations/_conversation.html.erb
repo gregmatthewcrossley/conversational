@@ -1,5 +1,7 @@
 <div id="<%= dom_id conversation %>">
 
+  <h1>This is conversation <%= conversation.id %></h1>
+
   <div data-controller="conversation">
     <button data-action="click->conversation#poll" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Poll Location</button>
     <button data-action="click->conversation#send" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send Location</button>

@@ -1,6 +1,14 @@
 class ConversationsController < ApplicationController
   before_action :set_conversation, only: %i[ show edit update destroy ]
 
+  def converse
+    # this is the root / default enpoint, which should find or create 
+    # a conversation based on the session ID
+    @conversation = Conversation.find_or_create_by(session_id: session&.id.to_s)
+    # render the show conversation view
+    render :show
+  end
+
   # GET /conversations or /conversations.json
   def index
     @conversations = Conversation.all
