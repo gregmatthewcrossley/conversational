@@ -36,3 +36,9 @@ Things you may want to cover:
 - Get a simple audio stream working on the "show conversation" page. Use ActionCable.
 - Make a "position" (include lat, long, alt, bearing, speed timestamps) - belong to conversation
 - Build a worker that accepts a conversation object and generates a queue of sound files to stream to the client.
+
+- On the client side, the browser should ask for permission to get your location.
+- JS should, every n seconds, post location data to the server.
+- ActionCable should send a new audio file when ready.
+
+- Idea: send it images from Google Places API, have chat GPT comment on them

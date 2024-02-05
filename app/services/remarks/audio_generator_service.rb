@@ -1,4 +1,4 @@
-class Remarks::AudioGeneratorService < Remarks::BaseService
+class AudioGeneratorService::Remarks < BaseService::Remarks
   PERSONALITIES = %w[alloy echo fable onyx nova shimmer] # see: https://platform.openai.com/docs/guides/text-to-speech/voice-options
 
   def initialize(remark_text)

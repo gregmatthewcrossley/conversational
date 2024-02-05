@@ -1,4 +1,4 @@
-class Remarks::TextGeneratorService < Remarks::BaseService
+class TextGeneratorService::Remarks < BaseService::Remarks
   def initialize(place_description, last_said = nil)
     raise ArgumentError, "place_description must be a String, and should be something like 'Greenwhich Village, New York City'" unless place_description.is_a?(String) && place_description.present?
     @place_description = place_description

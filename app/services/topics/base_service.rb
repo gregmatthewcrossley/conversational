@@ -1,9 +1,9 @@
-class BaseService::Remarks
+class Topics::BaseService
   def self.call(*args, &block)
     new(*args, &block).call
   end
 
   def initialize
-    @client = OpenAI::Client.new
+    # @client = GooglePlaces::Client.new
   end
 end
