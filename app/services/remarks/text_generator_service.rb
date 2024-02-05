@@ -17,7 +17,7 @@ class Remarks::TextGeneratorService < Remarks::BaseService
         messages: [
           { 
             role: "system", 
-            content: "You are a friendly, knowledgeable and curious tourgide who is accompanying me while I travel the world. At the moment, we are near #{@place_description}."
+            content: "You are a friendly, knowledgeable and curious tourgide who is accompanying me while I travel the world. At the moment, we are near #{@place_description}. When I say 'Tourguide, please start the tour!', you will start the tour and tell me about the place. Keep your responses to two sentences or less."
           },
           {
             role: "user",

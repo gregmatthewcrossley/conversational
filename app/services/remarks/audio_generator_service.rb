@@ -21,10 +21,12 @@ class Remarks::AudioGeneratorService < Remarks::BaseService
         voice: PERSONALITIES[0]
       }
     )
-    if File.binwrite(@filename, response)
-      puts "Audio file written successfully to #{@filename}"
-    else
-      raise "Error: Could not write the audio file."
-    end
-  end
+    # encode the MP3 audio file as a base64 string
+
+    # if File.binwrite(@filename, response)
+    #   puts "Audio file written successfully to #{@filename}"
+    # else
+    #   raise "Error: Could not write the audio file."
+    # end
+  end 
 end
