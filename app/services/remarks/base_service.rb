@@ -1,4 +1,4 @@
-class BaseService::Remarks
+class Remarks::BaseService
   def self.call(*args, &block)
     new(*args, &block).call
   end

@@ -1,11 +1,7 @@
-class TextGeneratorService::Remarks < BaseService::Remarks
-  def initialize(place_description, last_said = nil)
-    raise ArgumentError, "place_description must be a String, and should be something like 'Greenwhich Village, New York City'" unless place_description.is_a?(String) && place_description.present?
+class Remarks::TextGeneratorService < Remarks::BaseService
+  def initialize(place_description)
+    raise ArgumentError, "place_description must be a String, and should be something like 'Greenwhich Village a neighbourhood in New York City'" unless place_description.is_a?(String) && place_description.present?
     @place_description = place_description
-    if last_said.present?
-      raise ArgumentError, "last_said must be a String, and should be the last thing this app said" unless last_said.is_a?(String)
-      @last_said = last_said
-    end
     super() # will initialize the @client variable
   end
 
@@ -21,11 +17,11 @@ class TextGeneratorService::Remarks < BaseService::Remarks
         messages: [
           { 
             role: "system", 
-            content: "You are a friendly, knowledgeable and curious talk radio personality."
+            content: "You are a friendly, knowledgeable and curious tourgide who is accompanying me while I travel the world. At the moment, we are near #{@place_description}."
           },
           {
             role: "user",
-            content: "This is where I am right now: #{@place_description}. Please tell me about it in a sentence or two."
+            content: "Tourguide, please start the tour!"
           }
         ],
         temperature: 1.0,
