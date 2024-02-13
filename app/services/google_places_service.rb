@@ -1,7 +1,7 @@
 class GooglePlacesService < BaseService
   include HTTParty
-  base_uri 'https://places.googleapis.com'
-  
+  base_uri "https://places.googleapis.com"
+
   def initialize(lat, long)
     # validate lat and long
     raise ArgumentError, "lat must be between -90 and 90" unless lat.between?(-90.0, 90.0)
@@ -53,9 +53,9 @@ class GooglePlacesService < BaseService
   end
 
   def body
-     # see: https://developers.google.com/maps/documentation/places/web-service/nearby-search#optional-parameters
+    # see: https://developers.google.com/maps/documentation/places/web-service/nearby-search#optional-parameters
     {
-      includedTypes: included_types.first(10),
+      includedTypes: included_types,
       maxResultCount: 10,
       locationRestriction: {
         circle: {
@@ -79,16 +79,16 @@ class GooglePlacesService < BaseService
 
   def field_mask_strings
     # see: https://developers.google.com/maps/documentation/places/web-service/nearby-search#fieldmask
-    %w(
+    %w[
       places.displayName
       places.primaryTypeDisplayName
       places.types
       places.location
-    ).join(",")
+    ].join(",")
   end
 
   def included_types
-    %w(
+    %w[
       farm
       art_gallery
       museum
@@ -133,7 +133,7 @@ class GooglePlacesService < BaseService
       ferry_terminal
       subway_station
       train_station
-    )
+    ]
   end
 
   # def included_primary_types
@@ -158,7 +158,7 @@ class GooglePlacesService < BaseService
   #     natural_feature
   #     neighborhood
   #     place_of_worship
-  #     plus_code 	
+  #     plus_code
   #     point_of_interest
   #     political
   #     post_box
