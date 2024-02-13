@@ -22,7 +22,7 @@ export default class extends Controller {
     // send an initial location update, in case this is the first time the user has started the conversation
     update_location();
     // ask the server to start generating conversation
-    // start_conversation();
+    start_conversation();
     // update the location every 5 seconds
     this.update_location_periodically();
   }
@@ -46,7 +46,7 @@ export default class extends Controller {
   }
 
   stop_updating_location_periodically() {
-    if (this.periodicLocationUpdater == null) return;
+    if (this.periodicLocationUpdater == null) return; 
     clearInterval(this.periodicLocationUpdater);
   }
 

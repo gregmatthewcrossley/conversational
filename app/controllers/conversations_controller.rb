@@ -1,19 +1,19 @@
 class ConversationsController < ApplicationController
-  before_action :set_conversation, only: %i[start end show edit update destroy]
+  before_action :set_conversation, only: %i[ start end show edit update destroy ]
 
   def converse
-    # this is the root / default enpoint, which should find or create
+    # this is the root / default enpoint, which should find or create 
     # a conversation based on the session ID
     @conversation = Conversation.find_or_create_by(session_id: session&.id.to_s)
     # render the show conversation view
-    render "converse"
+    render :show
   end
 
   def start
     respond_to do |format|
       format.json do
         @conversation.start!
-        render json: {message: "Conversation started successfully."}
+        render json: { message: "Conversation started successfully." }
       end
     end
   end
@@ -22,7 +22,7 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       format.json do
         @conversation.end!
-        render json: {message: "Conversation ended successfully."}
+        render json: { message: "Conversation ended successfully." }
       end
     end
   end
@@ -96,7 +96,7 @@ class ConversationsController < ApplicationController
     params.require(:conversation).permit(
       :program_class,
       location_params: [
-        :latitude,
+        :latitude, 
         :longitude
       ]
     )
