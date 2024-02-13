@@ -37,4 +37,3 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 *.mp3
-.vscode/rdbg_autoattach.json

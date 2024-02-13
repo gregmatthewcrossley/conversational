@@ -46,7 +46,7 @@ export default class extends Controller {
   }
 
   stop_updating_location_periodically() {
-    if (this.periodicLocationUpdater == null) return;
+    if (this.periodicLocationUpdater == null) return; 
     clearInterval(this.periodicLocationUpdater);
   }
 
