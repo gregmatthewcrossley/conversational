@@ -1,8 +1,15 @@
 class Programs::Base
-
   def initialize(conversation)
     raise ArgumentError, "conversation must be a Conversation" unless conversation.is_a?(Conversation)
-    @conversation = conversation 
+    @conversation = conversation
+  end
+
+  def name
+    # Assuming this method is being called from a child class
+    # (e.g. from an instance of Program::Podcast),
+    # get the name of the Program class from the class name
+    # for example, Program::Podcast => "Podcast"
+    self.class.name.demodulize
   end
 
   def role_description_for(speaker)
@@ -17,7 +24,7 @@ class Programs::Base
   def build_next_remark(current_point_of_interest, recent_remarks)
     raise ArgumentError, "current_point_of_interest must be a String" unless current_point_of_interest.is_a?(String)
     raise ArgumentError, "recent_remarks must be a collection of Remarks" unless recent_remarks.respond_to?(:all?) && recent_remarks.all? { |r| r.is_a?(Remark) }
-    
+
     # determine the next speaker (should be any speaker other than the last speaker)
     previous_speaker = recent_remarks.last&.speaker || speakers.first
     next_speaker = speakers.reject { |s| s == previous_speaker }.sample
@@ -35,5 +42,4 @@ class Programs::Base
       content: next_remark_body
     )
   end
-
 end
