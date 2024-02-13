@@ -2,6 +2,10 @@
 ### A talk radio program about where you are right now.
 
 #### Manual Testing
+To start a conversation:
+1. Open the site in your browser, and click "Start Conversation"
+
+
 To test the two remark generator services, in the Rails console, run:
 ```
 reload!; remark = Remarks::TextGeneratorService.call("Toronto, Ontario"); Remarks::AudioGeneratorService.call(remark)

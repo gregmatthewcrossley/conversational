@@ -10,11 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_03_010633) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_07_201435) do
   create_table "conversations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "session_id", limit: 32, null: false
+    t.string "program_class"
+    t.datetime "started_at"
+    t.datetime "ended_at"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -28,5 +31,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_03_010633) do
     t.index ["conversation_id"], name: "index_locations_on_conversation_id"
   end
 
+  create_table "remarks", force: :cascade do |t|
+    t.string "speaker_class", null: false
+    t.text "content", null: false
+    t.integer "location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "heard_at"
+    t.index ["location_id"], name: "index_remarks_on_location_id"
+  end
+
   add_foreign_key "locations", "conversations"
+  add_foreign_key "remarks", "locations"
 end

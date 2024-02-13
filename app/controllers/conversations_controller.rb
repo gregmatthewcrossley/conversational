@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  before_action :set_conversation, only: %i[ show edit update destroy ]
+  before_action :set_conversation, only: %i[ start end show edit update destroy ]
 
   def converse
     # this is the root / default enpoint, which should find or create 
@@ -7,6 +7,24 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.find_or_create_by(session_id: session&.id.to_s)
     # render the show conversation view
     render :show
+  end
+
+  def start
+    respond_to do |format|
+      format.json do
+        @conversation.start!
+        render json: { message: "Conversation started successfully." }
+      end
+    end
+  end
+
+  def end
+    respond_to do |format|
+      format.json do
+        @conversation.end!
+        render json: { message: "Conversation ended successfully." }
+      end
+    end
   end
 
   # GET /conversations or /conversations.json
@@ -46,6 +64,7 @@ class ConversationsController < ApplicationController
   def update
     respond_to do |format|
       if @conversation.update(conversation_params)
+        start_or_end_conversation
         format.html { redirect_to conversation_url(@conversation), notice: "Conversation was successfully updated." }
         format.json { render :show, status: :ok, location: @conversation }
       else
@@ -66,20 +85,20 @@ class ConversationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_conversation
-      @conversation = Conversation.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def conversation_params
-      params.fetch(:conversation, {
-        location_params: [
-          :latitude,
-          :longitude,
-          :altitude,
-          :heading
-        ]
-      })
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_conversation
+    @conversation = Conversation.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def conversation_params
+    params.require(:conversation).permit(
+      :program_class,
+      location_params: [
+        :latitude, 
+        :longitude
+      ]
+    )
+  end
 end

@@ -1,7 +1,7 @@
-class Topics::GooglePlacesService < Topics::BaseService
+class GooglePlacesService < BaseService
   include HTTParty
   base_uri 'https://places.googleapis.com'
-
+  
   def initialize(lat, long)
     # validate lat and long
     raise ArgumentError, "lat must be between -90 and 90" unless lat.between?(-90.0, 90.0)
@@ -20,7 +20,7 @@ class Topics::GooglePlacesService < Topics::BaseService
   def call
     response = self.class.post("/v1/places:searchNearby", **@options).deep_symbolize_keys.dig(:places)
     response.map do |place|
-      "#{place.dig(:displayName, :text)}, a #{place.dig(:primaryTypeDisplayName, :text)&.downcase} in #{location_description}" # e.g. "The Louvre, a museum"
+      "#{place.dig(:displayName, :text)}, a #{place.dig(:primaryTypeDisplayName, :text)&.downcase} in #{location_description}" # e.g. "The Louvre, a museum in Paris, France"
     end
   end
 
@@ -46,7 +46,7 @@ class Topics::GooglePlacesService < Topics::BaseService
             latitude: @lat,
             longitude: @long
           },
-          radius: 50000.0 # meters
+          radius: 5000.0 # meters
         }
       }
     }.to_json
@@ -55,7 +55,7 @@ class Topics::GooglePlacesService < Topics::BaseService
   def body
      # see: https://developers.google.com/maps/documentation/places/web-service/nearby-search#optional-parameters
     {
-      includedTypes: included_types,
+      includedTypes: included_types.first(10),
       maxResultCount: 10,
       locationRestriction: {
         circle: {

@@ -8,4 +8,6 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "@rails/actioncable", to: "actioncable.esm.js"
 pin_all_from "app/javascript/channels", under: "channels"
 
+pin_all_from "app/javascript/audio_playback_services", under: "audio_playback_services"
+pin_all_from "app/javascript/conversation_services", under: "conversation_services"
 pin_all_from "app/javascript/location_services", under: "location_services"
