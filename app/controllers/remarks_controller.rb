@@ -1,70 +1,71 @@
-class Controller < ApplicationController
-  before_action :set_, only: %i[ show edit update destroy ]
+class RemarksController < ApplicationController
+  before_action :set_remark, only: %i[show edit update destroy]
 
-  # GET / or /.json
+  # GET /remarks or /remarks.json
   def index
-    @ = .all
+    @remarks = Remark.all
   end
 
-  # GET //1 or //1.json
+  # GET /remarks/1 or /remarks/1.json
   def show
   end
 
-  # GET //new
+  # GET /remarks/new
   def new
-    @ = .new
+    @remark = Remark.new
   end
 
-  # GET //1/edit
+  # GET /remarks/1/edit
   def edit
   end
 
-  # POST / or /.json
+  # POST /remarks or /remarks.json
   def create
-    @ = .new(_params)
+    @remark = Remark.new(remark_params)
 
     respond_to do |format|
-      if @.save
-        format.html { redirect_to _url(@), notice: " was successfully created." }
-        format.json { render :show, status: :created, location: @ }
+      if @remark.save
+        format.html { redirect_to remark_url(@remark), notice: "Remark was successfully created." }
+        format.json { render :show, status: :created, location: @remark }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @.errors, status: :unprocessable_entity }
+        format.json { render json: @remark.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT //1 or //1.json
+  # PATCH/PUT /remarks/1 or /remarks/1.json
   def update
     respond_to do |format|
-      if @.update(_params)
-        format.html { redirect_to _url(@), notice: " was successfully updated." }
-        format.json { render :show, status: :ok, location: @ }
+      if @remark.update(remark_params)
+        format.html { redirect_to remark_url(@remark), notice: "Remark was successfully updated." }
+        format.json { render :show, status: :ok, location: @remark }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @.errors, status: :unprocessable_entity }
+        format.json { render json: @remark.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE //1 or //1.json
+  # DELETE /remarks/1 or /remarks/1.json
   def destroy
-    @.destroy!
+    @remark.destroy!
 
     respond_to do |format|
-      format.html { redirect_to _url, notice: " was successfully destroyed." }
+      format.html { redirect_to remarks_url, notice: "Remark was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_
-      @ = .find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def _params
-      params.require(:).permit(:title, :details, :location_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_remark
+    @remark = Remark.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def remark_params
+    params.fetch(:remark, {})
+  end
 end

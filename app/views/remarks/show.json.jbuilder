@@ -1,1 +1,1 @@
-json.partial! "/", : @
+json.partial! "remarks/remark", remark: @remark

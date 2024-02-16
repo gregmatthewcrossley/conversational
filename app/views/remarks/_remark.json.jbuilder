@@ -1,2 +1,2 @@
-json.extract! , :id, :title, :details, :location_id, :created_at, :updated_at
-json.url _url(, format: :json)
+json.extract! remark, :id, :created_at, :updated_at
+json.url remark_url(remark, format: :json)

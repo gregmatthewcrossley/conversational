@@ -1,1 +1,1 @@
-json.array! @, partial: "/", as: :
+json.array! @remarks, partial: "remarks/remark", as: :remark

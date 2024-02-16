@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Test < ActiveSupport::TestCase
+class RemarkTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,48 +1,48 @@
 require "test_helper"
 
-class ControllerTest < ActionDispatch::IntegrationTest
+class RemarksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @ = (:one)
+    @remark = remarks(:one)
   end
 
   test "should get index" do
-    get _url
+    get remarks_url
     assert_response :success
   end
 
   test "should get new" do
-    get new__url
+    get new_remark_url
     assert_response :success
   end
 
-  test "should create " do
-    assert_difference(".count") do
-      post _url, params: { : { details: @.details, location_id: @.location_id, title: @.title } }
+  test "should create remark" do
+    assert_difference("Remark.count") do
+      post remarks_url, params: { remark: {  } }
     end
 
-    assert_redirected_to _url(.last)
+    assert_redirected_to remark_url(Remark.last)
   end
 
-  test "should show " do
-    get _url(@)
+  test "should show remark" do
+    get remark_url(@remark)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit__url(@)
+    get edit_remark_url(@remark)
     assert_response :success
   end
 
-  test "should update " do
-    patch _url(@), params: { : { details: @.details, location_id: @.location_id, title: @.title } }
-    assert_redirected_to _url(@)
+  test "should update remark" do
+    patch remark_url(@remark), params: { remark: {  } }
+    assert_redirected_to remark_url(@remark)
   end
 
-  test "should destroy " do
-    assert_difference(".count", -1) do
-      delete _url(@)
+  test "should destroy remark" do
+    assert_difference("Remark.count", -1) do
+      delete remark_url(@remark)
     end
 
-    assert_redirected_to _url
+    assert_redirected_to remarks_url
   end
 end

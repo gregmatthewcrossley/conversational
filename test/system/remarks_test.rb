@@ -1,45 +1,39 @@
 require "application_system_test_case"
 
-class Test < ApplicationSystemTestCase
+class RemarksTest < ApplicationSystemTestCase
   setup do
-    @ = (:one)
+    @remark = remarks(:one)
   end
 
   test "visiting the index" do
-    visit _url
-    assert_selector "h1", text: ""
+    visit remarks_url
+    assert_selector "h1", text: "Remarks"
   end
 
-  test "should create " do
-    visit _url
-    click_on "New "
+  test "should create remark" do
+    visit remarks_url
+    click_on "New remark"
 
-    fill_in "Details", with: @.details
-    fill_in "Location", with: @.location_id
-    fill_in "Title", with: @.title
-    click_on "Create "
+    click_on "Create Remark"
 
-    assert_text " was successfully created"
+    assert_text "Remark was successfully created"
     click_on "Back"
   end
 
-  test "should update " do
-    visit _url(@)
-    click_on "Edit this ", match: :first
+  test "should update Remark" do
+    visit remark_url(@remark)
+    click_on "Edit this remark", match: :first
 
-    fill_in "Details", with: @.details
-    fill_in "Location", with: @.location_id
-    fill_in "Title", with: @.title
-    click_on "Update "
+    click_on "Update Remark"
 
-    assert_text " was successfully updated"
+    assert_text "Remark was successfully updated"
     click_on "Back"
   end
 
-  test "should destroy " do
-    visit _url(@)
-    click_on "Destroy this ", match: :first
+  test "should destroy Remark" do
+    visit remark_url(@remark)
+    click_on "Destroy this remark", match: :first
 
-    assert_text " was successfully destroyed"
+    assert_text "Remark was successfully destroyed"
   end
 end
