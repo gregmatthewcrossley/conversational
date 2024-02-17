@@ -1,0 +1,12 @@
+<div id="header">
+  <h1>
+    Program: <%= conversation.program.name %>
+  </h1>
+  <h2>
+    Topic: <%= conversation.latest_topic %>
+  </h2>
+  <h3>
+    Speakers: <%= conversation.program.speaker_names.join(', ') %>
+  </h3>
+  Unheard remarks: <%= conversation.unheard_remark_count %>
+</div>

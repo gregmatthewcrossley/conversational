@@ -1,0 +1,10 @@
+<div id="locations">
+  <% if conversation.locations.any? %>
+    <h1>Location Records</h1>
+    <ol >
+      <% conversation.locations.last(10).each do |location| %>
+        <%= render partial: 'locations/location_row', locals: { location: location } %>
+      <% end %>
+    </ol>
+  <% end %>
+</div>

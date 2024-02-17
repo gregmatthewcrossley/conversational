@@ -7,6 +7,13 @@ class Remark < ApplicationRecord
 
   validates :content, presence: true
 
+  after_save_commit -> {
+    broadcast_replace_later_to "stream_for_conversation_#{conversation.id}",
+      partial: "conversations/header",
+      locals: {conversation: conversation},
+      target: "header"
+  }
+
   def speaker
     @speaker ||= speaker_class.constantize
   end

@@ -34,7 +34,7 @@ function postLocationAsJson(position) {
     body: JSON.stringify(data)
   }).then(response => {
     if (response.ok) {
-      console.log("Location posted to server: " + position.coords.latitude + ", " + position.coords.longitude);
+      console.log("The server has received a location update.");
     } else {
       console.error("Request to post location failed.");
     }

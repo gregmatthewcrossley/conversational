@@ -1,2 +1,6 @@
-<%= image_tag "data:image/png;base64,#{conversation.locations.last.map_image_data}" %>
-<p>map generated: <%= Time.zone.now %></p>
+<div id="map">
+  <% if conversation.locations.any? %>
+    <%= image_tag "data:image/png;base64,#{conversation.locations.last.map_image_data}"%>
+    <p>map generated: <%= Time.zone.now %></p>
+  <% end %>
+</div>

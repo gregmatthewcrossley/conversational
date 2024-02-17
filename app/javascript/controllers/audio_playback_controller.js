@@ -1,6 +1,7 @@
 // app/javascript/controllers/audio_playback_controller.js
 import { Controller } from "@hotwired/stimulus"
 import { isAtTopOfQueue, isAnythingPlaying, playAudio, nextAudioAfter, removeAudioFromDOM } from "audio_playback_services/audio_playback"
+import { notifyServerThatRemarkHasBeenPlayed } from "remark_services/remark_server_updating"
 
 export default class extends Controller {
   connect() {
@@ -8,8 +9,10 @@ export default class extends Controller {
     if (isAtTopOfQueue(this.element) && !isAnythingPlaying()) {
       playAudio(this.element);
     }
-    
+
     this.element.addEventListener('ended', () => {
+      // Let the server know that the audio for this remark has been played to completion
+      notifyServerThatRemarkHasBeenPlayed(this.element.dataset.remarkid);
       // If there is another <audio> element under this one, and nothing else is playing, then play it
       if (nextAudioAfter(this.element) != null && !isAnythingPlaying()) {
         playAudio(nextAudioAfter(this.element));

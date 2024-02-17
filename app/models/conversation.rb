@@ -15,6 +15,19 @@ class Conversation < ApplicationRecord
 
   scope :started, -> { where.not(started_at: nil) }
 
+  after_save_commit -> {
+    broadcast_replace_later_to "stream_for_conversation_#{id}",
+      partial: "conversations/header",
+      locals: {conversation: self},
+      target: "header"
+  }
+  after_save_commit -> {
+    broadcast_replace_later_to "stream_for_conversation_#{id}",
+      partial: "conversations/buttons",
+      locals: {conversation: self},
+      target: "buttons"
+  }
+
   def program
     @program ||= program_class.constantize.new(self)
   end
@@ -48,10 +61,32 @@ class Conversation < ApplicationRecord
     started.each(&:end!)
   end
 
+  def unheard_remark_count
+    remarks.unheard.count
+  end
+
+  def latest_location
+    locations.last
+  end
+
+  def update_latest_topic_if_necessary!
+    if latest_topic.nil? || latest_location.nearby_points_of_interest.exclude?(latest_topic)
+      update!(latest_topic: select_a_new_topic)
+    end
+  end
+
+  delegate :select_a_new_topic, to: :program
+
+  def create_new_remark!
+    program.build_next_remark.tap do |remark|
+      remark.save!
+    end
+  end
+
   private
 
   def start_the_program
-    ProgramRunnerJob.perform_later(self.id)
+    ProgramDirectorJob.perform_later(id)
   end
 
   def clear_the_ended_at_time
@@ -74,5 +109,4 @@ class Conversation < ApplicationRecord
   def set_default_program_class
     self.program_class = "Programs::Podcast"
   end
-
 end

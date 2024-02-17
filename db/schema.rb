@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_07_201435) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_17_134247) do
   create_table "conversations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_201435) do
     t.string "program_class"
     t.datetime "started_at"
     t.datetime "ended_at"
+    t.string "latest_topic"
   end
 
   create_table "locations", force: :cascade do |t|

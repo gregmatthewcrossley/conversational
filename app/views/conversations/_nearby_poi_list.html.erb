@@ -1,7 +1,15 @@
-<h1>Nearby Points of Interest:</h1>
-<ol class="list-disc">
-  <% conversation.locations.last.nearby_points_of_interest.each do |poi| %>
-    <li><%= poi %></li>
+<div id="nearby-poi-list">
+  <% if conversation.locations.any? %>
+    <h1>Nearby Points of Interest:</h1>
+    <ol class="list-disc">
+      <% conversation.locations.last.nearby_points_of_interest.each do |poi| %>
+        <% if poi == conversation.latest_topic %>
+          <li><strong><%= poi %></strong></li>
+        <%else%>
+          <li><%= poi %></li>
+        <%end%>
+      <% end %>
+    </ol>
+    <p>list generated: <%= Time.zone.now %></p>
   <% end %>
-</ol>
-<p>list generated: <%= Time.zone.now %></p>
+</div>
