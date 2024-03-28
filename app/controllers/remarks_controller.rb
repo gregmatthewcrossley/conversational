@@ -66,6 +66,6 @@ class RemarksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def remark_params
-    params.fetch(:remark).permit(:heard_at)
+    params.fetch(:remark).permit
   end
 end

@@ -26,7 +26,7 @@ class Programs::Base
     @conversation.latest_location.nearby_points_of_interest.first # just pick the nearest point of interest for now
   end
 
-  def build_next_remark
+  def create_new_remark!
     recent_remarks = @conversation.remarks.last(5)
 
     # determine the next speaker (should be any speaker other than the last speaker)
@@ -35,14 +35,14 @@ class Programs::Base
 
     # Given the current point of interest and recent remarks, ask the next speaker to say something
     # while acting out the role assigned to them by this Program
-    next_remark_body = next_speaker.say_something_about(
+    next_remark_body = next_speaker.write_a_remark_about(
       @conversation.latest_topic,
       recent_remarks: recent_remarks,
       role_description: role_description_for(next_speaker)
     )
 
-    # build the next remark
-    Remark.build(
+    # save the new remark (will enqueue a job to generate audio for it)
+    Remark.create(
       speaker: next_speaker,
       content: next_remark_body,
       location: @conversation.latest_location

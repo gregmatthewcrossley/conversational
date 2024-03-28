@@ -1,6 +1,4 @@
 class Conversation < ApplicationRecord
-  include BroadcastsAudio
-
   has_many :locations, dependent: :destroy
   has_many :remarks, through: :locations
 
@@ -15,12 +13,6 @@ class Conversation < ApplicationRecord
 
   scope :started, -> { where.not(started_at: nil) }
 
-  after_save_commit -> {
-    broadcast_replace_later_to "stream_for_conversation_#{id}",
-      partial: "conversations/header",
-      locals: {conversation: self},
-      target: "header"
-  }
   after_save_commit -> {
     broadcast_replace_later_to "stream_for_conversation_#{id}",
       partial: "conversations/buttons",
@@ -61,8 +53,8 @@ class Conversation < ApplicationRecord
     started.each(&:end!)
   end
 
-  def unheard_remark_count
-    remarks.unheard.count
+  def unsent_remark_count
+    remarks.unsent.count
   end
 
   def latest_location
@@ -76,11 +68,19 @@ class Conversation < ApplicationRecord
   end
 
   delegate :select_a_new_topic, to: :program
+  delegate :create_new_remark!, to: :program
 
-  def create_new_remark!
-    program.build_next_remark.tap do |remark|
-      remark.save!
-    end
+  def broadcast_next_unsent_remark_audio
+    # update the conversation's header with the latest unsent remark counts
+    broadcast_replace_later_to "stream_for_conversation_#{id}",
+      partial: "conversations/header",
+      locals: {conversation: self},
+      target: "header"
+
+    remarks.reload
+    remark = remarks.unsent.audio_generated.first
+    return if remark.nil?
+    remark.broadcast_audio_to_client
   end
 
   private

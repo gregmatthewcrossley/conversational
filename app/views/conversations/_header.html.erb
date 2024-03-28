@@ -8,5 +8,10 @@
   <h3>
     Speakers: <%= conversation.program.speaker_names.join(', ') %>
   </h3>
-  Unheard remarks: <%= conversation.unheard_remark_count %>
+  <h3>
+    Unsent remarks: <%= conversation.unsent_remark_count %>
+  </h3>
+  <h3>
+    Header last updated: <%= Time.zone.now %>
+  </h3>
 </div>
